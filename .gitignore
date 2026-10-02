@@ -1,0 +1,19 @@
+# Environment variables
+.env
+.env.*
+
+# Memory data
+chroma_db/
+reflex_storage/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS-specific
+.DS_Store
+
+# Logs
+*.log
