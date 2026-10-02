@@ -20,3 +20,5 @@ venv/
 
 # Runtime state
 agents.json
+
+!.env.example
