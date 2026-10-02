@@ -1,0 +1,11 @@
+# Nexus Prime — agent_with_memory dependencies
+# Install with: pip install -r requirements.txt
+# Note: vault_viewer.py / agent_viewer.py use tkinter, which needs a system
+# Tk install on Linux (e.g. sudo apt install python3-tk).
+
+ollama>=0.4.0
+google-genai>=1.0.0
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+chromadb>=0.5.0
+nest_asyncio>=1.6.0

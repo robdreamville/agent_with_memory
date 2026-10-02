@@ -222,6 +222,26 @@ def create_tool_on_the_fly(tool_name: str, description: str, python_code: str) -
 
     formatted_code = f'\n\n@register_tool(description="""{safe_description}""")\n{sanitized_python_code}\n'
     try:
+        import tempfile
+        import subprocess
+        import os
+
+        # Write to a temporary file first
+        with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix='.py') as temp_f:
+            temp_f.write(formatted_code)
+            temp_filepath = temp_f.name
+        
+        # Compile the temporary file
+        compile_process = subprocess.run(
+            ['python', '-m', 'py_compile', temp_filepath],
+            capture_output=True, text=True
+        )
+        
+        os.remove(temp_filepath)
+
+        if compile_process.returncode != 0:
+            return f"Error: Compilation failed. Cannot add tool. Details:\n{compile_process.stderr}"
+
         with open(__file__, "a") as f:
             f.write(formatted_code)
         return f"Success: Tool '{tool_name}' has been written to tools.py and registered."
@@ -233,15 +253,16 @@ def get_system_context() -> str:
     from datetime import datetime
     import config
     from pydantic import BaseModel
-    
+    import time
+
     class SystemContext(BaseModel):
         current_datetime: str
         timezone: str
         active_provider: str
         
     context = SystemContext(
-        current_datetime=datetime.now().isoformat(),
-        timezone="UTC",
+        current_datetime=datetime.now().astimezone().isoformat(),
+        timezone=time.tzname[time.daylight],
         active_provider=config.AI_PROVIDER,
     )
     return context.model_dump_json()
@@ -353,7 +374,6 @@ def format_duration(seconds: int) -> str:
 
     minutes = remaining_seconds // 60
     seconds = remaining_seconds % 60
-    print("used tool")
     return f"{days} days, {hours} hours, {minutes} minutes, {seconds} seconds"
 
 

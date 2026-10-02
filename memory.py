@@ -276,10 +276,6 @@ class MemoryManager:
                 keywords = item.keywords
                 rationale = item.rationale
 
-                # Heuristic safety for visibility
-                if "user" in tags and visibility == "private":
-                    visibility = "shared"
-
                 doc_id = f"mem_{self.agent_id}_{datetime.now().timestamp()}_{len(docs_to_add)}"
                 
                 docs_to_add.append(content)
