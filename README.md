@@ -52,10 +52,14 @@ Tool definitions live in `tools.py`, registered via a `@register_tool` decorator
 
 ## Quickstart
 
+New here? See **[SETUP.md](SETUP.md)** for the full four-step walkthrough (it covers creating your
+`agents.json` from the shipped example).
+
 **Prerequisites:** Python 3.10+, and for local mode Ollama with `gemma4:e2b` and `qwen2.5:1.5b` pulled. The Tkinter viewers need a system Tk
 install on Linux (`sudo apt install python3-tk`).
 pip install -r requirements.txt
 cp .env.example .env # then add your GEMINI_API_KEY
+cp agents.example.json agents.json # starter agent manifest (gitignored, private to you)
 python agent.py
 
 
